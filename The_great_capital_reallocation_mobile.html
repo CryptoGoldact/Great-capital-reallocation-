@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>The Great Capital Reallocation</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #141c2b;
+      --card2: #1a2436;
+      --accent: #f59e0b;
+      --gold: #fbbf24;
+      --btc: #f7931a;
+      --eth: #627eea;
+      --silver: #a8b0bc;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #e8eef7;
+      --muted: #8b9bb4;
+      --border: #243044;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 40px;
+    }
+    .wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px 0; }
+    .hero { text-align: center; padding: 12px 0 24px; }
+    .hero h1 {
+      font-size: 1.5rem; font-weight: 800; line-height: 1.25;
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .hero .sub { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+    section { margin-bottom: 28px; }
+    h2 {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      margin-bottom: 12px; padding-left: 10px; border-left: 3px solid var(--accent);
+    }
+    h3 { font-size: 0.95rem; font-weight: 650; color: var(--text); margin: 16px 0 8px; }
+    p { font-size: 0.92rem; margin-bottom: 10px; color: var(--text); }
+    .muted { color: var(--muted); font-size: 0.85rem; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 16px; margin-bottom: 12px;
+    }
+    .card-accent {
+      border-color: rgba(245, 158, 11, 0.45);
+      background: linear-gradient(160deg, #1a2436, #141c2b);
+    }
+    .big { text-align: center; padding: 8px 0; }
+    .big .num { font-size: 1.7rem; font-weight: 800; color: var(--gold); }
+    .big .label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .key-q {
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      border-radius: 14px; padding: 16px; text-align: center;
+      margin: 16px 0; font-size: 0.9rem;
+    }
+    .key-q strong { color: var(--accent); display: block; margin-top: 8px; font-size: 0.95rem; }
+    .alloc { margin-bottom: 12px; }
+    .alloc-top { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 4px; }
+    .bar { height: 9px; background: var(--card2); border-radius: 5px; overflow: hidden; }
+    .bar > div { height: 100%; border-radius: 5px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat { background: var(--card2); border-radius: 12px; padding: 12px 8px; text-align: center; }
+    .stat .v { font-size: 1.05rem; font-weight: 700; }
+    .stat .l { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+    .arch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .arch-item {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 8px; text-align: center;
+    }
+    .arch-item .ico { font-size: 1.35rem; margin-bottom: 2px; }
+    .arch-item .n { font-size: 0.82rem; font-weight: 700; }
+    .arch-item .r { font-size: 0.7rem; color: var(--muted); }
+    .flow { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 12px 0; }
+    .flow-box {
+      width: 100%; max-width: 300px; background: var(--card2);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 12px; text-align: center; font-size: 0.85rem; font-weight: 600;
+    }
+    .flow-arrow { color: var(--accent); font-size: 1.1rem; }
+    .flow-box.g { border-color: var(--green); color: var(--green); }
+    .flow-box.e { border-color: var(--eth); color: var(--eth); }
+    .sc { border-radius: 14px; padding: 14px; margin-bottom: 12px; border: 1px solid var(--border); }
+    .sc.p { background: linear-gradient(145deg, #1a2338, #0f172a); border-color: #475569; }
+    .sc.t { background: linear-gradient(145deg, #14291f, #0c1a14); border-color: var(--green); }
+    .sc.a { background: linear-gradient(145deg, #2a1515, #1a0c0c); border-color: var(--red); }
+    .sc-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .sc-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+    .price-row {
+      display: flex; justify-content: space-between; font-size: 0.88rem;
+      padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .price-row:last-child { border-bottom: none; }
+    .price-row .val { color: var(--gold); font-weight: 700; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 10px 0; }
+    .tbl th {
+      background: var(--card2); color: var(--muted); font-weight: 600;
+      padding: 9px 6px; text-align: center; border-bottom: 1px solid var(--border);
+    }
+    .tbl td {
+      padding: 9px 6px; text-align: center; border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+    .tbl tr:last-child td { border-bottom: none; }
+    ul.clean { list-style: none; padding: 0; }
+    ul.clean li { position: relative; padding: 5px 0 5px 18px; font-size: 0.88rem; }
+    ul.clean li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+    .note {
+      font-size: 0.8rem; color: var(--muted); background: var(--card2);
+      border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0;
+      padding: 12px; margin: 12px 0;
+    }
+    .highlight {
+      background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px; padding: 12px; text-align: center; font-size: 0.88rem; margin: 12px 0;
+    }
+    .footer {
+      text-align: center; font-size: 0.72rem; color: var(--muted);
+      padding: 24px 12px 8px; border-top: 1px solid var(--border);
+      margin-top: 20px; line-height: 1.5;
+    }
+    .tag {
+      display: inline-block; font-size: 0.72rem; background: var(--card2);
+      border: 1px solid var(--border); border-radius: 20px; padding: 3px 9px; margin: 2px; color: var(--muted);
+    }
+    .tag.ref { border-color: var(--green); color: var(--green); }
+    .tag.hyp { border-color: var(--accent); color: var(--accent); }
+    .divider { height: 1px; background: var(--border); margin: 18px 0; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>THE GREAT CAPITAL<br>REALLOCATION</h1>
+    <p class="sub">Debt • Purchasing power • AI • Geopolitics<br>New financial architecture</p>
+  </div>
+
+  <section>
+    <h2>Executive Summary</h2>
+    <div class="card card-accent">
+      <p>Global financial wealth continues to grow (~$333 tn in 2025 → ~$467 tn by 2030–2032, i.e. <strong>+$134 tn</strong>).</p>
+      <p>The question is not “which assets replace the others,” but <strong>what marginal fraction</strong> of this new capital can be reallocated toward new functions.</p>
+    </div>
+    <div class="key-q">
+      Central allocation hypothesis of new wealth
+      <strong>Gold 4% • Bitcoin 2% • Ethereum 1% • Silver 0.5%</strong>
+      <span class="muted" style="display:block;margin-top:6px">Total 7.5% ≈ order of magnitude $10.05 tn</span>
+    </div>
+    <p class="muted" style="text-align:center;margin-bottom:8px">
+      <span class="tag ref">Gold & BTC = institutional references</span>
+      <span class="tag hyp">ETH & Silver = modeling hypotheses</span>
+    </p>
+  </section>
+
+  <section>
+    <h2>1. Global capital reservoir</h2>
+    <div class="card">
+      <div class="big">
+        <div class="num">$333 tn</div>
+        <div class="label">Global financial wealth 2025 (BCG)</div>
+      </div>
+      <div class="divider"></div>
+      <div class="grid2">
+        <div class="stat">
+          <div class="v" style="color:var(--green)">+7%/yr</div>
+          <div class="l">Projected growth</div>
+        </div>
+        <div class="stat">
+          <div class="v" style="color:var(--gold)">≈ $467 tn</div>
+          <div class="l">Projection 2030–2032</div>
+        </div>
+      </div>
+      <div class="highlight" style="margin-bottom:0">
+        <strong>+$134 tn</strong> of additional financial wealth
+      </div>
+    </div>
+    <div class="note">
+      This is not an envelope available for gold / BTC / ETH / silver. Most continues to fund equities, bonds, companies, infrastructure, real estate and governments. <strong>The new architecture is built without destroying the old one.</strong>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Central allocation</h2>
+    <div class="card">
+      <div class="alloc">
+        <div class="alloc-top"><span style="color:var(--gold)">🥇 Gold</span><span>4.0%</span></div>
+        <div class="bar"><div style="width:53%;background:var(--gold)"></div></div>
+      </div>
+      <div class="alloc">
+        <div class="alloc-top"><span style="color:var(--btc)">₿ Bitcoin</span><span>2.0%</span></div>
+        <div class="bar"><div style="width:27%;background:var(--btc)"></div></div>
+      </div>
+      <div class="alloc">
+        <div class="alloc-top"><span style="color:var(--eth)">Ξ Ethereum</span><span>1.0%</span></div>
+        <div class="bar"><div style="width:13%;background:var(--eth)"></div></div>
+      </div>
+      <div class="alloc">
+        <div class="alloc-top"><span style="color:var(--silver)">🥈 Silver</span><span>0.5%</span></div>
+        <div class="bar"><div style="width:7%;background:var(--silver)"></div></div>
+      </div>
+      <div class="highlight" style="margin-bottom:0">
+        Total <strong>7.5%</strong> → order of magnitude ≈ <strong>$10.05 tn</strong>
+      </div>
+    </div>
+
+    <h3>Why these allocations?</h3>
+    <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:12px">
+      <table class="tbl" style="margin:0">
+        <tr>
+          <th style="width:22%">Asset</th>
+          <th style="width:16%">Alloc.</th>
+          <th>Justification</th>
+        </tr>
+        <tr>
+          <td style="text-align:left;padding-left:8px"><strong>🥇 Gold</strong></td>
+          <td><strong>4.0%</strong></td>
+          <td style="text-align:left;font-size:0.72rem">Institutional ref. (WGC 2.5–10%) + central bank reserves + physical scarcity</td>
+        </tr>
+        <tr>
+          <td style="text-align:left;padding-left:8px"><strong>₿ Bitcoin</strong></td>
+          <td><strong>2.0%</strong></td>
+          <td style="text-align:left;font-size:0.72rem">Institutional ref. (BlackRock 1–2%) + digital scarcity</td>
+        </tr>
+        <tr>
+          <td style="text-align:left;padding-left:8px"><strong>Ξ Ethereum</strong></td>
+          <td><strong>1.0%</strong></td>
+          <td style="text-align:left;font-size:0.72rem">Modeling hypothesis — stablecoin / tokenization / DeFi infrastructure</td>
+        </tr>
+        <tr>
+          <td style="text-align:left;padding-left:8px"><strong>🥈 Silver</strong></td>
+          <td><strong>0.5%</strong></td>
+          <td style="text-align:left;font-size:0.72rem">Modeling hypothesis — physical deficit + industrial demand + ratio</td>
+        </tr>
+      </table>
+    </div>
+    <p class="muted" style="text-align:center;margin-bottom:4px">
+      <span class="tag ref">Gold & BTC = institutional references</span>
+      <span class="tag hyp">ETH & Silver = modeling hypotheses</span>
+    </p>
+  </section>
+
+  <section>
+    <h2>3. Complementary architecture</h2>
+    <div class="arch">
+      <div class="arch-item"><div class="ico">📈</div><div class="n">Equities</div><div class="r">Growth engine</div></div>
+      <div class="arch-item"><div class="ico">🏛️</div><div class="n">Treasuries</div><div class="r">Funding & reserve</div></div>
+      <div class="arch-item"><div class="ico">💵</div><div class="n">Dollar</div><div class="r">Central currency</div></div>
+      <div class="arch-item"><div class="ico">🔗</div><div class="n">Stablecoins</div><div class="r">Digital distribution</div></div>
+      <div class="arch-item"><div class="ico" style="color:var(--eth)">Ξ</div><div class="n">Ethereum</div><div class="r">Programmable infra</div></div>
+      <div class="arch-item"><div class="ico" style="color:var(--btc)">₿</div><div class="n">Bitcoin</div><div class="r">Digital reserve</div></div>
+      <div class="arch-item"><div class="ico">🥇</div><div class="n">Gold</div><div class="r">Physical reserve</div></div>
+      <div class="arch-item"><div class="ico">🥈</div><div class="n">Silver</div><div class="r">Monetary + industrial</div></div>
+    </div>
+    <div class="note" style="margin-top:12px">
+      These assets are not competitors. They can become <strong>complementary</strong>.
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Stablecoin → on-chain finance flow</h2>
+    <div class="flow">
+      <div class="flow-box">Treasuries (T-bills)</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Stablecoin reserves</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box g">Digital dollars</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Payments + Tokenization</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box e">Ethereum (infrastructure)</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">DeFi + Financial settlement</div>
+    </div>
+    <div class="note">
+      Stablecoins > $270 bn in assets (end-2025). ≈ $153 bn of T-bills in reserves. The dollar can be <strong>strengthened</strong>, not destroyed.
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Ethereum — value capture path</h2>
+    <div class="card">
+      <p style="margin-bottom:8px">Not “Bitcoin #2.” The 1% hypothesis rests on:</p>
+      <ul class="clean">
+        <li>Stablecoin growth</li>
+        <li>RWA tokenization</li>
+        <li>DeFi & financial app activity</li>
+        <li>Fees + staking captured by the ecosystem</li>
+        <li>Network effects & liquidity</li>
+      </ul>
+    </div>
+    <div class="note">
+      At $22,000, ETH ≈ 0.56% of projected global wealth. More speculative than Bitcoin.
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Flow is not market cap</h2>
+    <div class="card">
+      <p>The $10.05 tn is <strong>not</strong> new liquidity entering all at once.</p>
+      <p>An investor can sell a stock to buy gold; a fund can sell a bond for BTC; a central bank can switch between currencies and gold.</p>
+      <p style="margin-bottom:0">Price impact depends on marginal demand, available liquidity and reallocation speed. A small fraction of global wealth can produce a much larger change in market cap — without making the scenario certain.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. 401(k)s — orders of magnitude</h2>
+    <div class="card">
+      <p class="muted" style="margin-bottom:10px">≈ $9.9 tn in US 401(k)s (Q1 2026)</p>
+      <table class="tbl">
+        <tr><th>Allocation</th><th>Amount</th></tr>
+        <tr><td>1%</td><td>$99 bn</td></tr>
+        <tr><td>2%</td><td>$198 bn</td></tr>
+        <tr><td>5%</td><td>$495 bn</td></tr>
+        <tr><td>10%</td><td>$990 bn</td></tr>
+      </table>
+      <p class="muted" style="margin:8px 0 0;text-align:center">A few % already create substantial flows.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>8. Three scenarios (2030–2032)</h2>
+
+    <div class="sc p">
+      <div class="sc-title">🟦 Prudent</div>
+      <div class="sc-desc">Limited diversification. Equities dominant. Inflation toward targets.</div>
+      <div class="price-row"><span>Gold</span><span class="val">$6,000</span></div>
+      <div class="price-row"><span>Silver</span><span class="val">$90</span></div>
+      <div class="price-row"><span>Bitcoin</span><span class="val">$200–350k</span></div>
+      <div class="price-row"><span>Ethereum</span><span class="val">$7.5–15k</span></div>
+    </div>
+
+    <div class="sc t">
+      <div class="sc-title">🟩 Successful Transition</div>
+      <div class="sc-desc">High debt, geopolitical tensions, 401(k)s open up, stablecoins & tokenization advance.</div>
+      <div class="price-row"><span>Gold</span><span class="val">$9,000</span></div>
+      <div class="price-row"><span>Silver</span><span class="val">$150</span></div>
+      <div class="price-row"><span>Bitcoin</span><span class="val">$500–700k</span></div>
+      <div class="price-row"><span>Ethereum</span><span class="val">$15–30k</span></div>
+    </div>
+
+    <div class="sc a">
+      <div class="sc-title">🟥 Acceleration</div>
+      <div class="sc-desc">Structural tensions, strong institutional adoption, widespread tokenization.</div>
+      <div class="price-row"><span>Gold</span><span class="val">$14,000</span></div>
+      <div class="price-row"><span>Silver</span><span class="val">$280</span></div>
+      <div class="price-row"><span>Bitcoin</span><span class="val">$1–1.2M</span></div>
+      <div class="price-row"><span>Ethereum</span><span class="val">$30–45k</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>9. Summary table</h2>
+    <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border)">
+      <table class="tbl" style="margin:0">
+        <tr>
+          <th>Asset</th>
+          <th>Prudent</th>
+          <th>Transition</th>
+          <th>Acceler.</th>
+        </tr>
+        <tr>
+          <td>🥇 Gold</td>
+          <td>$6,000</td>
+          <td>$9,000</td>
+          <td>$14,000</td>
+        </tr>
+        <tr>
+          <td>🥈 Silver</td>
+          <td>$90</td>
+          <td>$150</td>
+          <td>$280</td>
+        </tr>
+        <tr>
+          <td>₿ BTC</td>
+          <td>$200–350k</td>
+          <td>$500–700k</td>
+          <td>$1–1.2M</td>
+        </tr>
+        <tr>
+          <td>Ξ ETH</td>
+          <td>$7.5–15k</td>
+          <td>$15–30k</td>
+          <td>$30–45k</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>10. Key takeaways</h2>
+    <div class="card">
+      <ul class="clean">
+        <li>Global capital keeps growing (AI + productivity)</li>
+        <li>Marginal reallocation on a giant stock of wealth = disproportionate impact</li>
+        <li>Gold: inelastic supply → small allocation shift = large price effect</li>
+        <li>Bitcoin: absolute digital scarcity (fixed supply)</li>
+        <li>Ethereum: infrastructure layer, not “Bitcoin #2”</li>
+        <li>2030–2032 = reference horizon, not a mechanical deadline</li>
+        <li>Keep the traditional core + gradually add new allocation sleeves</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="key-q">
+      A superposition, not a revolution.
+      <strong>What share of global wealth can each economic function progressively capture?</strong>
+    </div>
+  </section>
+
+  <div class="footer">
+    Personal prospective analysis<br>
+    Does not constitute investment advice<br>
+    Scenarios are analytical constructions intended to open debate
+  </div>
+
+</div>
+</body>
+</html>
