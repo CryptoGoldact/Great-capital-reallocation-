@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Great Capital Reallocation</title>
+<style>
+:root{--bg:#0b0f19;--card:#141c2b;--card2:#1a2436;--accent:#f59e0b;--gold:#fbbf24;--btc:#f7931a;--eth:#627eea;--green:#10b981;--text:#e8eef7;--muted:#8b9bb4;--border:#243044}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;padding-bottom:48px}
+.wrap{max-width:520px;margin:0 auto;padding:20px 16px 0}
+.hero{text-align:center;padding:8px 0 20px}
+.hero h1{font-size:1.45rem;font-weight:800;line-height:1.25;background:linear-gradient(135deg,var(--gold),#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.hero .sub{font-size:.85rem;color:var(--muted)}
+h2{font-size:1.08rem;font-weight:700;color:var(--accent);margin:28px 0 12px;padding-left:10px;border-left:3px solid var(--accent)}
+h3{font-size:.96rem;font-weight:650;margin:16px 0 8px}
+p{font-size:.92rem;margin-bottom:12px}
+.muted{color:var(--muted);font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.card-accent{border-color:rgba(245,158,11,.45);background:linear-gradient(160deg,#1a2436,#141c2b)}
+.key-q{background:linear-gradient(145deg,#1e293b,#0f172a);border:1px solid rgba(245,158,11,.5);border-radius:14px;padding:16px;text-align:center;margin:16px 0;font-size:.9rem}
+.key-q strong{color:var(--accent);display:block;margin-top:8px}
+.highlight{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px;text-align:center;font-size:.9rem;margin:12px 0}
+.note{font-size:.82rem;color:var(--muted);background:var(--card2);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:12px;margin:12px 0}
+.tbl{width:100%;border-collapse:collapse;font-size:.78rem;margin:12px 0}
+.tbl th{background:var(--card2);color:var(--muted);font-weight:600;padding:9px 6px;text-align:center;border-bottom:1px solid var(--border)}
+.tbl td{padding:9px 6px;text-align:center;border-bottom:1px solid var(--border);background:var(--card)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td.left{text-align:left;padding-left:10px}
+ul.clean{list-style:none;padding:0;margin:8px 0 12px}
+ul.clean li{position:relative;padding:5px 0 5px 18px;font-size:.9rem}
+ul.clean li::before{content:"→";position:absolute;left:0;color:var(--accent)}
+.sc{border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid var(--border)}
+.sc.p{background:linear-gradient(145deg,#1a2338,#0f172a);border-color:#475569}
+.sc.t{background:linear-gradient(145deg,#14291f,#0c1a14);border-color:var(--green)}
+.sc.a{background:linear-gradient(145deg,#2a1515,#1a0c0c);border-color:#ef4444}
+.sc-title{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.sc-desc{font-size:.8rem;color:var(--muted);margin-bottom:10px}
+.price-row{display:flex;justify-content:space-between;font-size:.88rem;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.price-row:last-child{border-bottom:none}
+.price-row .val{color:var(--gold);font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.stat{background:var(--card2);border-radius:12px;padding:12px 8px;text-align:center}
+.stat .v{font-size:1.05rem;font-weight:700}
+.stat .l{font-size:.72rem;color:var(--muted);margin-top:2px}
+.arch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.arch-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center}
+.arch-item .ico{font-size:1.3rem;margin-bottom:2px}
+.arch-item .n{font-size:.82rem;font-weight:700}
+.arch-item .r{font-size:.7rem;color:var(--muted)}
+.flow{display:flex;flex-direction:column;align-items:center;gap:4px;margin:12px 0}
+.flow-box{width:100%;max-width:300px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center;font-size:.85rem;font-weight:600}
+.flow-arrow{color:var(--accent);font-size:1.1rem}
+.tag{display:inline-block;font-size:.72rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:3px 9px;margin:2px;color:var(--muted)}
+.tag.ref{border-color:var(--green);color:var(--green)}
+.tag.hyp{border-color:var(--accent);color:var(--accent)}
+.footer{text-align:center;font-size:.72rem;color:var(--muted);padding:24px 12px 8px;border-top:1px solid var(--border);margin-top:28px;line-height:1.5}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.big{text-align:center;padding:6px 0}
+.big .num{font-size:1.6rem;font-weight:800;color:var(--gold)}
+.big .label{font-size:.78rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <h1>THE GREAT CAPITAL<br>REALLOCATION</h1>
+  <p class="sub">Debt • Purchasing power • AI • Geopolitics<br>New financial architecture</p>
+</div>
+
+<h2>Executive Summary</h2>
+<div class="card card-accent">
+  <p>Global financial wealth continues to grow. According to BCG, it reached about <strong>$333 trillion</strong> in 2025 and could approach <strong>$467 trillion</strong> by 2030–2032 (+$134 trillion of additional financial wealth).</p>
+  <p>The question is not which assets will replace the others, but <strong>what marginal fraction</strong> of this new capital can be reallocated toward different functions: physical reserve (gold), digital reserve (Bitcoin), programmable infrastructure (Ethereum), and monetary/industrial metal (silver).</p>
+</div>
+<div class="key-q">
+  Central allocation hypothesis of new wealth
+  <strong>Gold 4% • Bitcoin 2% • Ethereum 1% • Silver 0.5%</strong>
+  <span class="muted" style="display:block;margin-top:6px">Total 7.5% ≈ order of magnitude $10.05 trillion</span>
+</div>
+<p class="muted" style="text-align:center">
+  <span class="tag ref">Gold &amp; BTC = institutional references</span>
+  <span class="tag hyp">ETH &amp; Silver = modeling hypotheses</span>
+</p>
+<p>Three scenarios (2030–2032): <strong>Prudent</strong> (Gold $6,000 / BTC $200–350k) • <strong>Successful Transition</strong> (Gold $9,000 / BTC $500–700k) • <strong>Acceleration</strong> (Gold $14,000 / BTC $1–1.2M).</p>
+
+<h2>Introduction — A transition already underway</h2>
+<p>The global economy is entering a phase in which several transformations are occurring simultaneously. Debt remains elevated, the money supply has expanded strongly over the long term, inflation remains a structural risk, and geopolitical tensions are pushing major powers to secure energy, critical minerals, trade routes and strategic technologies.</p>
+<p>At the same time, artificial intelligence opens the possibility of a considerable increase in productivity. The United States is seeking to reinforce its economic and financial power, while 401(k)s, stablecoins and tokenization could gradually create new channels for capital circulation.</p>
+<p>This is not about assuming that traditional assets will disappear. It is about determining how part of global wealth could progressively be reallocated toward assets serving different functions: growth, store of value, digital reserve, financial infrastructure and protection against physical scarcity.</p>
+<p>The outcome can appear paradoxical: production costs may fall while the amount of capital to be invested rises. Productivity gains turn into wealth. And that capital must be allocated.</p>
+<div class="key-q">
+  The real question is not: “Which assets will replace the others?”
+  <strong>But: “What fraction of new capital can progressively be reallocated toward assets able to preserve purchasing power, diversify reserves or form the new financial infrastructure?”</strong>
+</div>
+<p>It is this marginal fraction that can have disproportionate consequences for gold, silver, Bitcoin and Ethereum. This analysis is a prospective reflection based on data and hypotheses. It is neither investment advice nor a certain forecast.</p>
+
+<h2>1. A global capital reservoir in expansion</h2>
+<div class="card">
+  <div class="big"><div class="num">$333 tn</div><div class="label">Global financial wealth 2025 (BCG)</div></div>
+  <div class="divider"></div>
+  <div class="grid2">
+    <div class="stat"><div class="v" style="color:var(--green)">+7%/yr</div><div class="l">Projected growth</div></div>
+    <div class="stat"><div class="v" style="color:var(--gold)">≈ $467 tn</div><div class="l">Projection 2030–2032</div></div>
+  </div>
+  <div class="highlight" style="margin-bottom:0"><strong>+$134 tn</strong> of additional financial wealth</div>
+</div>
+<p>It would be wrong to treat these $134 trillion as an envelope available for gold, Bitcoin, Ethereum and silver. The bulk will continue to fund equities, bonds, companies, infrastructure, real estate, pension funds and governments.</p>
+<p><strong>Fundamental constraint:</strong> the new financial architecture must be built without destroying the old one.</p>
+<p>Four functions are examined separately:</p>
+<ul class="clean">
+  <li>gold as physical reserve</li>
+  <li>Bitcoin as digital reserve</li>
+  <li>Ethereum as programmable financial infrastructure</li>
+  <li>silver as physical scarcity and industrial asset</li>
+</ul>
+<p class="muted">Other altcoins remain deliberately on the margin: their selection is more speculative and does not allow a comparable allocation hypothesis with the same robustness.</p>
+
+<h2>2. Central allocation and justification</h2>
+<p>Of the projected new financial wealth (+$134 trillion), the model retains the following central hypothesis:</p>
+<div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border)">
+<table class="tbl" style="margin:0">
+<tr><th>Asset</th><th>Alloc.</th><th>Primary justification</th></tr>
+<tr><td class="left"><strong>Gold</strong></td><td><strong>4.0%</strong></td><td class="left" style="font-size:.72rem">Institutional ref. (WGC 2.5–10%) + central bank reserves + physical scarcity</td></tr>
+<tr><td class="left"><strong>Bitcoin</strong></td><td><strong>2.0%</strong></td><td class="left" style="font-size:.72rem">Institutional ref. (BlackRock 1–2%) + digital scarcity</td></tr>
+<tr><td class="left"><strong>Ethereum</strong></td><td><strong>1.0%</strong></td><td class="left" style="font-size:.72rem">Modeling hypothesis — stablecoin / tokenization / DeFi infrastructure</td></tr>
+<tr><td class="left"><strong>Silver</strong></td><td><strong>0.5%</strong></td><td class="left" style="font-size:.72rem">Modeling hypothesis — physical deficit + industrial demand + ratio</td></tr>
+<tr><td class="left"><strong>Total</strong></td><td><strong>7.5%</strong></td><td class="left" style="font-size:.72rem">≈ order of magnitude $10.05 trillion</td></tr>
+</table>
+</div>
+<p style="margin-top:12px"><strong>Important distinction:</strong></p>
+<ul class="clean">
+  <li>Gold 4% and Bitcoin 2% rest on direct institutional references.</li>
+  <li>Ethereum 1% and Silver 0.5% are modeling hypotheses.</li>
+</ul>
+<div class="note">The $10.05 trillion figure is neither a mandatory envelope nor a promise of incoming flows. It combines a reallocation hypothesis with a wealth projection. The bulk of new wealth will remain in equities, bonds, companies, infrastructure, real estate, pension funds and governments.</div>
+
+<h2>3. The real objective: preserve and grow purchasing power</h2>
+<p>An investor does not think only in nominal returns. They seek to preserve wealth in real terms. A bond yielding 5% in a lasting 4% inflation environment delivers only about 1% real return before tax.</p>
+<p>Each asset class serves a function:</p>
+<ul class="clean">
+  <li>Equities → growth</li>
+  <li>Bonds → income, stability, funding</li>
+  <li>Gold → store of value with no credit risk</li>
+  <li>Bitcoin → digital reserve with tightly constrained supply</li>
+  <li>Ethereum → programmable financial infrastructure</li>
+  <li>Silver → monetary + reserve + industrial use</li>
+</ul>
+
+<h2>4. AI changes the economic equation</h2>
+<p>Artificial intelligence can raise productivity. If a firm produces more with the same capital and labor: productivity ↑ → unit costs ↓ → potential margins ↑ → profits ↑ → investment ↑ → financial capital ↑.</p>
+<p>AI therefore exerts two forces at once: disinflation on some costs, and creation of new profits and new capital. Productivity gains do not disappear: they turn into wealth.</p>
+
+<h2>5. Big Tech: a machine that turns technology into capital</h2>
+<p>Google, Apple, Meta, Amazon and Microsoft transform technology → revenue → profits → cash flow → investment → new assets. With AI this process could accelerate further. These firms are not only beneficiaries of the transition: they help create the capital that must then be allocated.</p>
+
+<h2>6. The system constraint: the system must keep working</h2>
+<p>A massive reallocation of retirement portfolios into gold, Bitcoin or Ethereum would be hard to reconcile with the current system. Investors need equities (growth) and bonds (income, stability, funding). Governments need buyers for their debt. Banks need liquid assets and collateral. Pension funds need returns.</p>
+<p>Ethereum can be studied as potential financial infrastructure. Other cryptoassets belong in a more speculative sleeve, possibly a diversified basket, not as a structural allocation comparable to Bitcoin or Ethereum.</p>
+<p class="muted">The future is unlikely to be: “massive sale of traditional assets → massive purchase of new assets.”</p>
+<p><strong>It looks more like: “keep the traditional core + gradually add new allocation sleeves.”</strong></p>
+
+<h2>7. 401(k)s: a vast reservoir, not a reserve to empty</h2>
+<p>In Q1 2026, Americans held about $13.8 trillion in defined-contribution plans, of which about $9.9 trillion in 401(k)s. Equity funds alone accounted for roughly $3.3 trillion of 401(k) assets held via mutual funds.</p>
+<p>Assuming 20% of 401(k)s move into gold (≈ $1.98 trillion) would be unrealistic and costly for equity and bond funding. The credible scenario is a gradual opening of new allocation possibilities.</p>
+<div class="card">
+  <p class="muted" style="margin-bottom:8px">Orders of magnitude on $9.9 trillion:</p>
+  <table class="tbl">
+    <tr><th>Allocation</th><th>Amount</th></tr>
+    <tr><td>1%</td><td>$99 bn</td></tr>
+    <tr><td>2%</td><td>$198 bn</td></tr>
+    <tr><td>3%</td><td>$297 bn</td></tr>
+    <tr><td>5%</td><td>$495 bn</td></tr>
+    <tr><td>10%</td><td>$990 bn</td></tr>
+  </table>
+  <p class="muted" style="text-align:center;margin-top:8px">A few percentage points are already enough to create substantial flows.</p>
+</div>
+
+<h2>8. Gold — strategic physical reserve</h2>
+<p>Gold has a unique characteristic: it is already held by central banks, institutions, ETFs, individuals, sovereign funds and Asian markets. The World Gold Council estimates that central banks and official institutions held nearly 39,000 tonnes of gold (≈ $5 trillion) at end-2025, about 26% of allocated global reserves.</p>
+<p><strong>Gold does not need to be “discovered.” It simply needs to be more heavily allocated.</strong></p>
+<h3>What additional allocation can be justified?</h3>
+<p>The World Gold Council estimates that a strategic allocation of about 5% can improve the risk/return profile of a diversified portfolio (studied range 2.5%–10%). The 2026 analysis also shows that adding 5% gold improved risk-adjusted returns and reduced volatility and drawdowns.</p>
+<p>We retain 4% of new financial wealth as the central hypothesis. This is not an official forecast: it is a model hypothesis within the range studied by the World Gold Council.</p>
+<h3>The central-bank constraint</h3>
+<p>Central banks do not have an unlimited funding source. They trade off among bonds, currencies, gold, cash and other reserves. In 2025 net purchases reached 863 tonnes (down from &gt;1,000 tonnes in the prior three years), as high prices made some banks more cautious.</p>
+<p>Yet in June 2026, 89% of reserve managers expected higher global gold reserves over the next twelve months, and 83% expected a higher share of gold in reserves five years out. Balanced conclusion: persistent but not unlimited buying.</p>
+<h3>Physical constraint and price level</h3>
+<p>In 2025: mine production ≈ 3,672 tonnes versus total demand ≈ 5,002 tonnes. Investment demand reached ≈ 2,175 tonnes (of which 801 tonnes of ETF inflows). Mine supply is not rising fast enough to absorb a major new wave of demand without a price rise that attracts more recycling and mining investment.</p>
+<p>This is one reason gold can react strongly to a small change in its global allocation. In the central scenario these elements lead to a <strong>$9,000/oz</strong> hypothesis — subject to continued reserve diversification, higher institutional demand, persistent geopolitical tensions and relatively inelastic physical supply.</p>
+
+<h2>9. Bitcoin — what place for a digital reserve?</h2>
+<p>Bitcoin serves a different function. Its potential strength lies in digital scarcity: unlike gold, its supply cannot be increased to meet rising institutional demand.</p>
+<p>BlackRock estimates that a 1–2% allocation to Bitcoin can be reasonable in a multi-asset portfolio for an investor who accepts its risk, while noting that beyond 2% the risk contribution rises sharply. We therefore retain 2% of new wealth as the central benchmark.</p>
+<div class="card">
+  <p class="muted" style="margin-bottom:8px">Implied market caps (≈ 20 million BTC in circulation):</p>
+  <table class="tbl">
+    <tr><th>BTC Price</th><th>Market Cap</th><th>% of 2030 wealth</th></tr>
+    <tr><td>$200,000</td><td>≈ $4 tn</td><td>≈ 0.9%</td></tr>
+    <tr><td>$350,000</td><td>≈ $7 tn</td><td>≈ 1.5%</td></tr>
+    <tr><td><strong>$650,000</strong></td><td><strong>≈ $13 tn</strong></td><td><strong>≈ 2.8%</strong></td></tr>
+    <tr><td>$1,000,000</td><td>≈ $20 tn</td><td>≈ 4.3%</td></tr>
+    <tr><td>$1,200,000</td><td>≈ $24 tn</td><td>≈ 5.1%</td></tr>
+  </table>
+</div>
+<p>Key point: a market capitalization is not a cash pool that must be filled dollar for dollar. Price depends on marginal demand and the quantity actually available for sale. Conversely, the larger Bitcoin becomes, the more substantial the flows required to keep pushing it higher.</p>
+<p>The $650,000 scenario corresponds to Bitcoin representing ≈ 2.8% of projected global financial wealth. It is ambitious, but it does not assume Bitcoin absorbs the entire financial system.</p>
+
+<h2>10. Ethereum — on-chain financial infrastructure</h2>
+<p>Ethereum should not be treated as “Bitcoin number two.” Its potential function is different: capturing part of the activity linked to stablecoins, real-world asset (RWA) tokenization, DeFi, settlement, financial applications and staking.</p>
+<p>Unlike Bitcoin, we do not have an equivalent institutional benchmark that mechanically justifies a 1% allocation. This 1% is explicitly a modeling hypothesis.</p>
+<p><strong>Indicative value-capture path:</strong></p>
+<ul class="clean">
+  <li>Growth of stablecoins (already &gt; $270 bn in assets end-2025, of which ≈ $153 bn in T-bills)</li>
+  <li>Progressive tokenization of real assets and securities</li>
+  <li>Rising DeFi and on-chain financial application activity</li>
+  <li>Transaction fees + staking revenues captured by the Ethereum ecosystem</li>
+  <li>A significant share of this activity remaining anchored on Ethereum (network effects + liquidity)</li>
+</ul>
+<div class="card">
+  <p class="muted" style="margin-bottom:8px">Market-cap orders of magnitude (≈ 120 million ETH):</p>
+  <table class="tbl">
+    <tr><th>ETH Price</th><th>Market Cap</th><th>% of 2030 wealth</th></tr>
+    <tr><td>$7,500</td><td>≈ $900 bn</td><td>≈ 0.19%</td></tr>
+    <tr><td>$15,000</td><td>≈ $1.8 tn</td><td>≈ 0.39%</td></tr>
+    <tr><td><strong>$22,000</strong></td><td><strong>≈ $2.64 tn</strong></td><td><strong>≈ 0.56%</strong></td></tr>
+    <tr><td>$30,000</td><td>≈ $3.6 tn</td><td>≈ 0.77%</td></tr>
+    <tr><td>$45,000</td><td>≈ $5.4 tn</td><td>≈ 1.16%</td></tr>
+  </table>
+</div>
+<p>At $22,000, Ethereum would represent ≈ 0.56% of projected global financial wealth. This does not require it to capture a huge share of world wealth, but that a sufficiently large on-chain financial infrastructure develops and that Ethereum retains a significant share of it. This hypothesis remains more speculative than the one retained for Bitcoin.</p>
+
+<h2>11. Stablecoins: linking debt, the dollar and digital finance</h2>
+<p>Dollar stablecoins are not only crypto instruments: they can become a new distribution layer for the dollar. The BIS estimates that by end-2025 stablecoins exceeded $270 bn in assets, with ≈ $153 bn of Treasury bills in their reserves (about $33 bn of T-bill purchases in 2025).</p>
+<div class="flow">
+  <div class="flow-box">Treasuries (T-bills)</div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-box">Stablecoin reserves</div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-box" style="border-color:var(--green);color:var(--green)">Digital dollars</div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-box">Payments + Tokenization</div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-box" style="border-color:var(--eth);color:var(--eth)">Ethereum (infrastructure)</div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-box">DeFi + Financial settlement</div>
+</div>
+<p>Ethereum can benefit from this transformation without replacing the dollar or Treasuries. The dollar remains the currency, Treasuries the reserve asset, stablecoins provide digital distribution, and the blockchain supplies programmable infrastructure.</p>
+
+<h2>12. Silver — physical scarcity and industrial leverage</h2>
+<p>Silver has two engines: monetary investment and industrial demand. Its market is much smaller than gold’s, which can amplify moves when demand rises. The Silver Institute still forecasts a market deficit in 2026 for the sixth consecutive year (≈ 67 million ounces), limiting the ability to supply extra metal quickly.</p>
+<p>We retain 0.5% of new wealth. This allocation is clearly lower than gold’s or Bitcoin’s because silver’s financial and institutional depth is smaller. Once gold is set at $9,000, the gold/silver ratio provides a simple constraint:</p>
+<p class="muted" style="text-align:center">Ratio 100 → $90 &nbsp;|&nbsp; Ratio 75 → $120 &nbsp;|&nbsp; Ratio 60 → $150 &nbsp;|&nbsp; Ratio 50 → $180</p>
+<p>The central scenario retains $150 (ratio 60). The upside scenario assumes compression toward 50. The physical deficit and relative market size make this hypothesis defensible without guaranteeing it.</p>
+
+<h2>13. Reallocation: flow is not market capitalization</h2>
+<p>A portfolio allocation is not always funded by new money. An investor can sell a stock to buy gold; a fund can sell a bond to buy BTC; a central bank can switch between currencies, bonds and gold.</p>
+<p>The $10.05 trillion is therefore not $10.05 trillion of new liquidity entering the four markets at once. For Bitcoin in particular, the price effect depends on marginal demand, the quantity actually available for sale, long-term holder behavior and the speed of reallocation.</p>
+<p>Simplified illustration: if 30–50% of the theoretical 2% allocation materializes gradually, and only a fraction of the stock is liquid in any period, the price impact can remain large even with net flows well below the final market capitalization. That is why a relatively small fraction of global wealth can produce a much larger change in market cap — without making the scenario automatic or certain.</p>
+<p>Conversely, the higher Bitcoin or Ethereum’s market cap becomes, the more substantial the capital required to keep the trend going. A $13 trillion market does not behave like a $1.3 trillion market.</p>
+
+<h2>14. Timeline and reference horizon</h2>
+<p>With Bitcoin around $65,000 (the model’s reference period), the multiples to the central zones are demanding (×5 to ×10 depending on the scenario). The higher the starting market cap, the more one must reason in terms of share of global wealth and speed of reallocation rather than simple price multiples.</p>
+<p><strong>If new 401(k) allocation options, ETFs, institutional reserves, stablecoins and tokenization progress quickly, the successful-transition scenario can approach 2030. If implementation is slower, the same capitalization levels may be reached around 2031–2032. 2030–2032 is therefore a reference horizon, not a mechanical deadline.</strong></p>
+
+<h2>15. Geopolitics and reserve demand</h2>
+<p>The financial transition cannot be separated from geopolitics. Energy resources, critical minerals, trade routes and technologies are becoming elements of power. Tensions (supply chains, the Strait of Hormuz, competition for strategic resources) directly feed demand for protective assets and reserve diversification — especially gold and, potentially, Bitcoin.</p>
+<p>A prolonged energy disruption can push inflation higher, pressure rates and financial assets, and strengthen the search for reserves. It also creates an incentive to diversify suppliers, secure routes and negotiate among major powers. Geopolitics is not an automatic collapse hypothesis: it is a structural driver of reserve demand.</p>
+
+<h2>16. The dollar does not necessarily disappear</h2>
+<p>The transition can perfectly well take place inside the dollar system: dollar → stablecoin → Treasury → blockchain → tokenization → global settlement. The new architecture can strengthen the dollar rather than destroy it. The BIS already shows that stablecoins are significant buyers of T-bills.</p>
+<p>Ethereum can benefit from this transformation without replacing the dollar or Treasuries. The thesis is not “ETH replaces traditional finance,” but: a growing part of finance can become programmable and tokenized, and Ethereum could capture a share of that activity.</p>
+
+<h2>17. The possible architecture</h2>
+<p>These assets are not necessarily competitors. They can become complementary:</p>
+<div class="arch">
+  <div class="arch-item"><div class="ico">📈</div><div class="n">Equities</div><div class="r">Growth engine</div></div>
+  <div class="arch-item"><div class="ico">🏛️</div><div class="n">Treasuries</div><div class="r">Funding &amp; reserve</div></div>
+  <div class="arch-item"><div class="ico">💵</div><div class="n">Dollar</div><div class="r">Central currency</div></div>
+  <div class="arch-item"><div class="ico">🔗</div><div class="n">Stablecoins</div><div class="r">Digital distribution</div></div>
+  <div class="arch-item"><div class="ico" style="color:var(--eth)">Ξ</div><div class="n">Ethereum</div><div class="r">Programmable infra</div></div>
+  <div class="arch-item"><div class="ico" style="color:var(--btc)">₿</div><div class="n">Bitcoin</div><div class="r">Digital reserve</div></div>
+  <div class="arch-item"><div class="ico">🥇</div><div class="n">Gold</div><div class="r">Physical reserve</div></div>
+  <div class="arch-item"><div class="ico">🥈</div><div class="n">Silver</div><div class="r">Monetary + industrial</div></div>
+</div>
+
+<h2>18. The three scenarios (2030–2032)</h2>
+<p class="muted">The scenarios first describe the speed and scale of the transition. Price levels are the numerical consequences of those hypotheses, not targets set in advance.</p>
+
+<div class="sc p">
+  <div class="sc-title">1. Prudent</div>
+  <div class="sc-desc">Limited diversification. Equities remain dominant. Inflation moves back toward targets. New allocation possibilities stay modest.</div>
+  <div class="price-row"><span>Gold</span><span class="val">$6,000</span></div>
+  <div class="price-row"><span>Silver</span><span class="val">$90</span></div>
+  <div class="price-row"><span>Bitcoin</span><span class="val">$200,000–350,000</span></div>
+  <div class="price-row"><span>Ethereum</span><span class="val">$7,500–15,000</span></div>
+</div>
+
+<div class="sc t">
+  <div class="sc-title">2. Successful Transition</div>
+  <div class="sc-desc">Debt remains high, inflation periodically above targets, geopolitical tensions persist, central banks continue diversifying into gold, retirement vehicles gradually open more exposure options, stablecoins become an important component of the digital dollar and tokenization advances. Ethereum becomes meaningful infrastructure; Bitcoin an institutional digital reserve.</div>
+  <div class="price-row"><span>Gold</span><span class="val">$9,000</span></div>
+  <div class="price-row"><span>Silver</span><span class="val">$150</span></div>
+  <div class="price-row"><span>Bitcoin</span><span class="val">$500,000–700,000</span></div>
+  <div class="price-row"><span>Ethereum</span><span class="val">$15,000–30,000</span></div>
+</div>
+
+<div class="sc a">
+  <div class="sc-title">3. Acceleration</div>
+  <div class="sc-desc">Structural geopolitical tensions, continued regionalization of supply chains, persistent energy risks, stronger search for stores of value, accelerated central-bank diversification, Bitcoin as a strategic component of many portfolios, stablecoins as major global infrastructure, widespread tokenization. Ethereum becomes an important layer of global financial settlement.</div>
+  <div class="price-row"><span>Gold</span><span class="val">$14,000</span></div>
+  <div class="price-row"><span>Silver</span><span class="val">$280</span></div>
+  <div class="price-row"><span>Bitcoin</span><span class="val">$1,000,000–1,200,000</span></div>
+  <div class="price-row"><span>Ethereum</span><span class="val">$30,000–45,000</span></div>
+</div>
+
+<h2>19. Summary table</h2>
+<div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border)">
+<table class="tbl" style="margin:0">
+<tr><th>Asset</th><th>Prudent</th><th>Transition</th><th>Acceler.</th></tr>
+<tr><td>🥇 Gold</td><td>$6,000</td><td>$9,000</td><td>$14,000</td></tr>
+<tr><td>🥈 Silver</td><td>$90</td><td>$150</td><td>$280</td></tr>
+<tr><td>₿ BTC</td><td>$200–350k</td><td>$500–700k</td><td>$1–1.2M</td></tr>
+<tr><td>Ξ ETH</td><td>$7.5–15k</td><td>$15–30k</td><td>$30–45k</td></tr>
+</table>
+</div>
+
+<h2>Conclusion — A superposition, not a revolution</h2>
+<p>The scenario examined is not the disappearance of the current financial system. It is its gradual transformation.</p>
+<p>The United States needs to keep funding its debt. Companies need a deep equity market. Households need returns for retirement. Banks need liquidity and collateral. Investors need protection against inflation and geopolitical risks. Global finance needs new infrastructure.</p>
+<p>These needs can coexist. The system can evolve toward an architecture in which equities fund growth, Treasuries fund debt, the dollar keeps its central role, stablecoins distribute the dollar digitally, Ethereum provides programmable infrastructure, Bitcoin becomes a digital reserve, gold remains a strategic physical reserve and silver combines monetary and industrial functions.</p>
+<p>Other altcoins remain a secondary, more speculative sleeve.</p>
+<p>The key is not a mass flight out of traditional assets. It is a gradual increase in marginal allocations within a global stock of wealth that itself continues to grow.</p>
+<div class="key-q">
+  The final question is not which asset will replace the others,
+  <strong>but what share of global wealth each economic function can progressively capture.</strong>
+</div>
+<p>It is this marginal reallocation, applied to a gigantic stock of wealth, that could explain a revaluation far larger than that seen in a simple speculative cycle.</p>
+
+<div class="footer">
+  <strong>IMPORTANT DISCLAIMER</strong><br><br>
+  This document is a personal prospective analysis. It does not constitute investment advice, a recommendation to buy or sell, or a professional financial forecast. The authors are not licensed financial analysts, investment advisers or portfolio managers. Figures, allocations and projections rest on available data, explicit hypotheses and extrapolations; they may be wrong, incomplete or fail to materialize. The scenarios presented are analytical constructions intended to fuel debate, not guaranteed price targets. Any investment decision must be taken independently, according to each investor’s own situation and risk tolerance.
+</div>
+
+</div>
+</body>
+</html>
